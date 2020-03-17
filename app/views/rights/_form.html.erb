@@ -1,0 +1,22 @@
+<%= form_with(model: right, local: true) do |form| %>
+  <% if right.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(right.errors.count, "error") %> prohibited this right from being saved:</h2>
+
+      <ul>
+      <% right.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

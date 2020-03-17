@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @mark.value %>
+</p>
+
+<p>
+  <strong>Discipline:</strong>
+  <%= @mark.discipline %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @mark.date %>
+</p>
+
+<%= link_to 'Edit', edit_mark_path(@mark) %> |
+<%= link_to 'Back', marks_path %>

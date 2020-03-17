@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  value: 1
+  discipline: one
+  date: 2020-03-17 00:08:00
+
+two:
+  value: 1
+  discipline: two
+  date: 2020-03-17 00:08:00
