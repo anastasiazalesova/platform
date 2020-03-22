@@ -1,34 +1,35 @@
 class DisciplinesController < ApplicationController
+  before_action :require_current_user, except: []
   before_action :set_discipline, only: [:show, :edit, :update, :destroy]
 
   # GET /disciplines
   # GET /disciplines.json
   def index
-    authorize! :read, Discipline
+    authorize! :discipline_read, Discipline
     @disciplines = Discipline.all
   end
 
   # GET /disciplines/1
   # GET /disciplines/1.json
   def show
-    authorize! :read, @discipline
+    authorize! :discipline_read, @discipline
   end
 
   # GET /disciplines/new
   def new
-    authorize! :create, @discipline
+    authorize! :discipline_create, @discipline
     @discipline = Discipline.new
   end
 
   # GET /disciplines/1/edit
   def edit
-    authorize! :update, @discipline
+    authorize! :discipline_update, @discipline
   end
 
   # POST /disciplines
   # POST /disciplines.json
   def create
-    authorize! :create, @discipline
+    authorize! :discipline_create, @discipline
     @discipline = Discipline.new(discipline_params)
 
     respond_to do |format|
@@ -45,7 +46,7 @@ class DisciplinesController < ApplicationController
   # PATCH/PUT /disciplines/1
   # PATCH/PUT /disciplines/1.json
   def update
-    authorize! :update, @discipline
+    authorize! :discipline_update, @discipline
     respond_to do |format|
       if @discipline.update(discipline_params)
         format.html { redirect_to @discipline, notice: 'Discipline was successfully updated.' }
@@ -60,7 +61,7 @@ class DisciplinesController < ApplicationController
   # DELETE /disciplines/1
   # DELETE /disciplines/1.json
   def destroy
-    authorize! :destroy, @discipline
+    authorize! :discipline_destroy, @discipline
     @discipline.destroy
     respond_to do |format|
       format.html { redirect_to disciplines_url, notice: 'Discipline was successfully destroyed.' }

@@ -1,34 +1,35 @@
 class RightsController < ApplicationController
+  before_action :require_current_user, except: []
   before_action :set_right, only: [:show, :edit, :update, :destroy]
 
   # GET /rights
   # GET /rights.json
   def index
-    authorize! :read, Right
+    authorize! :right_read, Right
     @rights = Right.all
   end
 
   # GET /rights/1
   # GET /rights/1.json
   def show
-    authorize! :read, @right
+    authorize! :right_read, @right
   end
 
   # GET /rights/new
   def new
-    authorize! :create, @right
+    authorize! :right_create, @right
     @right = Right.new
   end
 
   # GET /rights/1/edit
   def edit
-    authorize! :update, @right
+    authorize! :right_update, @right
   end
 
   # POST /rights
   # POST /rights.json
   def create
-    authorize! :create, @right
+    authorize! :right_create, @right
     @right = Right.new(right_params)
 
     respond_to do |format|
@@ -45,7 +46,7 @@ class RightsController < ApplicationController
   # PATCH/PUT /rights/1
   # PATCH/PUT /rights/1.json
   def update
-    authorize! :update, @right
+    authorize! :right_update, @right
     respond_to do |format|
       if @right.update(right_params)
         format.html { redirect_to @right, notice: 'Right was successfully updated.' }
@@ -60,7 +61,7 @@ class RightsController < ApplicationController
   # DELETE /rights/1
   # DELETE /rights/1.json
   def destroy
-    authorize! :destroy, @right
+    authorize! :right_destroy, @right
     @right.destroy
     respond_to do |format|
       format.html { redirect_to rights_url, notice: 'Right was successfully destroyed.' }

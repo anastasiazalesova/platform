@@ -1,34 +1,34 @@
 class CredentialsController < ApplicationController
+  before_action :require_current_user, except: []
   before_action :set_credential, only: [:show, :edit, :update, :destroy]
 
   # GET /credentials
   # GET /credentials.json
   def index
-    authorize! :read, Credential
+    authorize! :credential_read, Credential
     @credentials = Credential.all
   end
 
   # GET /credentials/1
   # GET /credentials/1.json
   def show
-    authorize! :read, @credential
+    authorize! :credential_read, @credential
   end
 
   # GET /credentials/new
   def new
-    authorize! :create, @credential
     @credential = Credential.new
   end
 
   # GET /credentials/1/edit
   def edit
-    authorize! :update, @credential
+    authorize! :credential_update, @credential
   end
 
   # POST /credentials
   # POST /credentials.json
   def create
-    authorize! :create, @credential
+    authorize! :credential_create, @credential
     @credential = Credential.new(credential_params)
 
     respond_to do |format|
@@ -45,7 +45,7 @@ class CredentialsController < ApplicationController
   # PATCH/PUT /credentials/1
   # PATCH/PUT /credentials/1.json
   def update
-    authorize! :update, @credential
+    authorize! :credential_update, @credential
     respond_to do |format|
       if @credential.update(credential_params)
         format.html { redirect_to @credential, notice: 'Credential was successfully updated.' }
@@ -60,7 +60,7 @@ class CredentialsController < ApplicationController
   # DELETE /credentials/1
   # DELETE /credentials/1.json
   def destroy
-    authorize! :destroy, @credential
+    authorize! :credential_destroy, @credential
     @credential.destroy
     respond_to do |format|
       format.html { redirect_to credentials_url, notice: 'Credential was successfully destroyed.' }

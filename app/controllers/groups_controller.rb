@@ -1,34 +1,35 @@
 class GroupsController < ApplicationController
+  before_action :require_current_user, except: []
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   # GET /groups
   # GET /groups.json
   def index
-    authorize! :read, Group
+    authorize! :group_read, Group
     @groups = Group.all
   end
 
   # GET /groups/1
   # GET /groups/1.json
   def show
-    authorize! :read, @group
+    authorize! :group_read, @group
   end
 
   # GET /groups/new
   def new
-    authorize! :create, @group
+    authorize! :group_create, @group
     @group = Group.new
   end
 
   # GET /groups/1/edit
   def edit
-    authorize! :update, @group
+    authorize! :group_update, @group
   end
 
   # POST /groups
   # POST /groups.json
   def create
-    authorize! :create, @group
+    authorize! :group_create, @group
     @group = Group.new(group_params)
 
     respond_to do |format|
@@ -45,7 +46,7 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   # PATCH/PUT /groups/1.json
   def update
-    authorize! :update, @group
+    authorize! :group_update, @group
     respond_to do |format|
       if @group.update(group_params)
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
@@ -60,7 +61,7 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
-    authorize! :destroy, @group
+    authorize! :group_destroy, @group
     @group.destroy
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }

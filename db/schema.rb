@@ -39,6 +39,13 @@ ActiveRecord::Schema.define(version: 2020_03_16_210800) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "link_role_rights", force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "right_id"
+    t.index ["right_id"], name: "index_link_role_rights_on_right_id"
+    t.index ["role_id"], name: "index_link_role_rights_on_role_id"
+  end
+
   create_table "marks", force: :cascade do |t|
     t.integer "value"
     t.integer "teacher_id"

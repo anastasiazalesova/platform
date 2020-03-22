@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  before_action :require_current_user, except: []
-
   def require_current_user
     redirect_to(:root, :notice => "you must be logged in") unless current_user
   end

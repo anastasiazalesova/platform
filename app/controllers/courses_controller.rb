@@ -1,34 +1,35 @@
 class CoursesController < ApplicationController
+  before_action :require_current_user, except: []
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
   # GET /courses
   # GET /courses.json
   def index
     @courses = Course.all
-    authorize! :read, Course
+    authorize! :course_read, Course
   end
 
   # GET /courses/1
   # GET /courses/1.json
   def show
-    authorize! :read, @course
+    authorize! :course_read, @course
   end
 
   # GET /courses/new
   def new
-    authorize! :create, @course
+    authorize! :course_create, @course
     @course = Course.new
   end
 
   # GET /courses/1/edit
   def edit
-    authorize! :update, @course
+    authorize! :course_update, @course
   end
 
   # POST /courses
   # POST /courses.json
   def create
-    authorize! :create, @course
+    authorize! :course_create, @course
     @course = Course.new(course_params)
 
     respond_to do |format|
@@ -45,7 +46,7 @@ class CoursesController < ApplicationController
   # PATCH/PUT /courses/1
   # PATCH/PUT /courses/1.json
   def update
-    authorize! :update, @course
+    authorize! :course_update, @course
     respond_to do |format|
       if @course.update(course_params)
         format.html { redirect_to @course, notice: 'Course was successfully updated.' }
@@ -60,7 +61,7 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.json
   def destroy
-    authorize! :destroy, @course
+    authorize! :course_destroy, @course
     @course.destroy
     respond_to do |format|
       format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }

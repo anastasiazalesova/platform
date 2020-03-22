@@ -1,34 +1,35 @@
 class MarksController < ApplicationController
+  before_action :require_current_user, except: []
   before_action :set_mark, only: [:show, :edit, :update, :destroy]
 
   # GET /marks
   # GET /marks.json
   def index
-    authorize! :read, Mark
+    authorize! :mark_read, Mark
     @marks = Mark.all
   end
 
   # GET /marks/1
   # GET /marks/1.json
   def show
-    authorize! :read, @mark
+    authorize! :mark_read, @mark
   end
 
   # GET /marks/new
   def new
-    authorize! :create, @mark
+    authorize! :mark_create, @mark
     @mark = Mark.new
   end
 
   # GET /marks/1/edit
   def edit
-    authorize! :update, @mark
+    authorize! :mark_update, @mark
   end
 
   # POST /marks
   # POST /marks.json
   def create
-    authorize! :create, @mark
+    authorize! :mark_create, @mark
     @mark = Mark.new(mark_params)
 
     respond_to do |format|
@@ -45,7 +46,7 @@ class MarksController < ApplicationController
   # PATCH/PUT /marks/1
   # PATCH/PUT /marks/1.json
   def update
-    authorize! :update, @mark
+    authorize! :mark_update, @mark
     respond_to do |format|
       if @mark.update(mark_params)
         format.html { redirect_to @mark, notice: 'Mark was successfully updated.' }
@@ -60,7 +61,7 @@ class MarksController < ApplicationController
   # DELETE /marks/1
   # DELETE /marks/1.json
   def destroy
-    authorize! :destroy, @mark
+    authorize! :mark_destroy, @mark
     @mark.destroy
     respond_to do |format|
       format.html { redirect_to marks_url, notice: 'Mark was successfully destroyed.' }

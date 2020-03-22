@@ -1,4 +1,5 @@
 class ModsController < ApplicationController
+  before_action :require_current_user, except: []
   before_action :set_mod, only: [:show, :edit, :update, :destroy]
 
   # GET /mods

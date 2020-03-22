@@ -1,34 +1,35 @@
 class RolesController < ApplicationController
+  before_action :require_current_user, except: []
   before_action :set_role, only: [:show, :edit, :update, :destroy]
 
   # GET /roles
   # GET /roles.json
   def index
-    authorize! :read, @roles
+    authorize! :role_read, @roles
     @roles = Role.all
   end
 
   # GET /roles/1
   # GET /roles/1.json
   def show
-    authorize! :read, @role
+    authorize! :role_read, @role
   end
 
   # GET /roles/new
   def new
-    authorize! :create, Role
+    authorize! :role_create, Role
     @role = Role.new
   end
 
   # GET /roles/1/edit
   def edit
-    authorize! :update, @role
+    authorize! :role_update, @role
   end
 
   # POST /roles
   # POST /roles.json
   def create
-    authorize! :create, @role
+    authorize! :role_create, @role
     @role = Role.new(role_params)
 
     respond_to do |format|
@@ -45,7 +46,7 @@ class RolesController < ApplicationController
   # PATCH/PUT /roles/1
   # PATCH/PUT /roles/1.json
   def update
-    authorize! :update, @role
+    authorize! :role_update, @role
     respond_to do |format|
       if @role.update(role_params)
         format.html { redirect_to @role, notice: 'Role was successfully updated.' }
@@ -60,7 +61,7 @@ class RolesController < ApplicationController
   # DELETE /roles/1
   # DELETE /roles/1.json
   def destroy
-    authorize! :destroy, @role
+    authorize! :role_destroy, @role
     @role.destroy
     respond_to do |format|
       format.html { redirect_to roles_url, notice: 'Role was successfully destroyed.' }
