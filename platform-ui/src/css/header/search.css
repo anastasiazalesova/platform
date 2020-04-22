@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+
+.flexbox {
+  position: relative;
+  left: 12.3%;
+  top: calc(50% - 61px/2);
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+}
+
+.search > div {
+  display: inline-block;
+  position: relative;
+}
+
+.search > div > input {
+  position: relative;
+  color: #8E8E93;
+  font-size: 16px;
+  background: transparent;
+  width: 25px;
+  height: 25px;
+  border: solid 1px #007AFF;
+  outline: none;
+  border-radius: 35px;
+  transition: width 0.5s;
+  text-indent: 10px;
+}
+
+.search > div > input::placeholder {
+  color: #8E8E93;
+  opacity: 1;
+}
+
+.search > div > input::-ms-placeholder {
+  color: #8E8E93;
+}
+
+.search > div > input::-ms-input-placeholder {
+  color: #8E8E93;
+}
+
+.search > div > input:focus,
+.search > div > input:valid {
+  width: 250px;
+}

@@ -1,0 +1,137 @@
+@import "search.css";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+  color: #333;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+
+.header.shadow {
+  box-shadow: 0 9px 9px -9px rgba(0, 0, 0, 0.13);
+}
+
+.header.hidden {
+  transform: translateY(-110%);
+}
+
+.logo {
+  font-weight: bold;
+  position: absolute;
+  height: 27px;
+  left: 7.47%;
+  right: 89.94%;
+  top: calc(50% - 27px/2 - 0.5px);
+
+  font-family: 'Proxima Nova';
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: -0.530588px;
+
+  color: #007AFF;
+}
+
+.links {
+  position: absolute;
+  right: 43%;
+  bottom: 5%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-item {
+  display: inline;
+  position: relative;
+
+  font-family: Proxima Nova;
+  font-size: 16px;
+  line-height: 20px;
+/* identical to box height, or 125% */
+
+  letter-spacing: -0.256px;
+
+  color: #8E8E93;
+}
+
+.link-item .selected {
+  display: inline;
+  position: relative;
+
+  font-family: Proxima Nova;
+  font-size: 16px;
+  line-height: 20px;
+/* identical to box height, or 125% */
+
+  letter-spacing: -0.256px;
+
+  color: #000;
+}
+
+.link-item:hover {
+  font-family: Proxima Nova;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.256px;
+  color: #000000;
+}
+
+.link-item#my-courses {
+  height: 20px;
+  left: 13.5%;/*-8*/
+  right: 81.76%;
+  top: calc(50% - 20px/2);
+}
+
+.link-item#student-book {
+  height: 20px;
+  left: 26.75%;
+  right: 59.46%;
+  top: calc(50% - 20px/2);
+}
+
+.link-item#schedule {
+  height: 20px;
+  left: 39.05%;
+  right: 30.41%;
+  top: calc(50% - 20px/2);
+}
+
+.link-item#all-sections {
+  height: 20px;
+  left: 51.88%;
+  right: 0%;
+  top: calc(50% - 20px/2);
+}
+
+.link-item#profile {
+  height: 20px;
+  left: 113.38%;
+  right: 0%;
+  top: 50%;
+}
+
+.link-item#chat {
+  height: 20px;
+  left: 126.38%;
+  right: 0%;
+  top: 50%;
+}
+
+.link-item#exit {
+  height: 20px;
+  left: 133.38%;
+  right: 0%;
+  top: calc(50% - 20px/2);
+}

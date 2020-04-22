@@ -1,0 +1,43 @@
+@import "news-piece-card.css";
+@import "events-card.css";
+@import "email-card.css";
+
+.cards {
+  display: flex;
+  color: #8b8b8b;
+}
+
+.cards-header {
+  width: 50%;
+  text-align: left;
+  font-size: 28px;
+  margin-top: 0px;
+  display: inline-block;
+}
+
+.cards-header > h2 {
+  padding-left: 11px;
+}
+
+.cards-link-see-all {
+  width: 50%;
+  text-align: right;
+  font-size: 16px;
+  margin-top: 0px;
+  color: #007AFF;
+  display: inline-block;
+}
+
+.cards-link-see-all > a {
+  padding-right: 13px;
+}
+
+.card-box {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  background-color: #fff;
+  margin: 14px;
+  height: 313px;
+  border-radius: 14px;
+}

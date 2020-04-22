@@ -1,0 +1,8 @@
+@import "cards.css";
+
+.page-title {
+	text-align: left;
+	font-size: 60px;
+	padding-left: 10px;
+	margin-top: 0px;
+}
