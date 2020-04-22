@@ -1,0 +1,23 @@
+<div class="page-header">
+  <%= link_to news_pieces_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_news_piece_path(@news_piece), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show news_piece</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Title:</dt>
+  <dd><%= @news_piece.title %></dd>
+
+  <dt>Description:</dt>
+  <dd><%= @news_piece.description %></dd>
+
+  <dt>Time:</dt>
+  <dd><%= @news_piece.time %></dd>
+
+</dl>

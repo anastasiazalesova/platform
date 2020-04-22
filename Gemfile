@@ -62,3 +62,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'cancan'
 gem 'bootstrap-generators', '~> 3.3.4'
+gem 'record_tag_helper'
+gem 'react-rails'

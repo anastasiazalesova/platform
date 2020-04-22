@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_16_210800) do
+ActiveRecord::Schema.define(version: 2020_04_16_203133) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 2020_03_16_210800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mod_id"], name: "index_disciplines_on_mod_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.text "title"
+    t.text "description"
+    t.integer "tag"
+    t.string "imageUrl"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -65,6 +74,14 @@ ActiveRecord::Schema.define(version: 2020_03_16_210800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_mods_on_course_id"
+  end
+
+  create_table "news_pieces", force: :cascade do |t|
+    t.text "title"
+    t.text "description"
+    t.datetime "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rights", force: :cascade do |t|

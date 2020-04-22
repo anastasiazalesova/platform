@@ -1,5 +1,9 @@
 {
+	"homepage": ".",
   "name": "platform",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^3.5.0",
+    "react-router-dom": "^5.1.2"
+  }
 }
