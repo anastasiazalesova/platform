@@ -40,6 +40,11 @@
   color: #007AFF;
 }
 
+.logo > a {
+  color: inherit;
+  background-color: inherit;
+}
+
 .links {
   position: absolute;
   right: 43%;
@@ -63,6 +68,15 @@ a {
   letter-spacing: -0.256px;
 
   color: #8E8E93;
+}
+
+.link-item > a {
+  background-color: inherit;
+}
+
+.link-item > a:hover {
+  color: inherit;
+  background-color: inherit;
 }
 
 .link-item .selected {

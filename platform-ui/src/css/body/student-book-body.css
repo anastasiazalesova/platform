@@ -1,0 +1,102 @@
+@import "cards.css";
+@import "student-book-table.css";
+
+.student-book-header-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	/*flex: 1 1;*/
+}
+
+.student-book-page-title > h1 {
+	text-align: left;
+	font-size: 60px;
+	padding-left: 10px;
+	margin-top: 0px;
+	display: inline-block;
+	margin-bottom: 30px;
+}
+
+.student-book-description-container {
+	display: flex;
+	flex-direction: row;
+	flex: 1 1;
+	width: 100%;
+}
+
+.student-book-description-left {
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+}
+
+.student-book-description-left > div {
+	padding-bottom: 10px;
+	padding-top: 0px;
+}
+
+.student-book-description-right {
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+}
+
+.student-book-description-right > div {
+	padding-bottom: 10px;
+	padding-top: 0px;
+}
+
+.student-book-description-paragraph {
+	display: inline-block;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.student-book-combo-box-container {
+	margin-bottom: 21px;
+	margin-left: 40px;
+	min-width: 100px;
+}
+
+.student-book-combo-box__control {
+	border-color: transparent !important;
+	background-color: transparent !important;
+	border-radius: 14px !important;
+}
+
+.student-book-combo-box__indicator-separator {
+	background-color: transparent !important;
+}
+
+.student-book-combo-box__option {
+	text-align: left;
+}
+
+.student-book-content {
+	padding-left: 0px;
+}
+
+.student-book-content-item {
+	box-sizing: border-box;
+	width: 100%;
+	height: auto;
+	border-radius: 14px;
+	background-color: #fff;
+	margin-bottom: 4px;
+	display: inline-block;
+	padding-top: 22px;
+	padding-bottom: 22px;
+	padding-left: 13px;
+	padding-right: 13px;
+}
+
+.student-book-content-item > li {
+	width: auto;
+	font-size: 16px;
+	line-height: 21px;
+	letter-spacing: -0.32px;
+	color: #000000;
+
+	display: inline;
+}

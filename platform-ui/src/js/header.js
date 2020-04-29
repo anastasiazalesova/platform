@@ -58,8 +58,8 @@ function Header(props) {
         )}/>
         <Route path="/chat" children={(props) => (
           props.match ?
-            <li className="link-item" id="chat"><a href="/chat" style={{color: '#000'}}><img src="chat.png"></img></a></li> :
-            <li className="link-item" id="chat"><a href="/chat"><img src="chat.png"></img></a></li>
+            <li className="link-item" id="chat"><a href="/email" style={{color: '#000'}}><img src="chat.png"></img></a></li> :
+            <li className="link-item" id="chat"><a href="/email"><img src="chat.png"></img></a></li>
         )}/>
         <Route path="/profile" children={(props) => (
           props.match ?

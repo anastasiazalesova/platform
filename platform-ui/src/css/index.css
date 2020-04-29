@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Proxima+Nova');
 @import "header/header.css";
 @import "body/body.css";
+@import "body/email-body.css";
+@import "body/courses-body.css";
+@import "body/student-book-body.css";
 
 html {
   height: 100%;
@@ -41,29 +44,22 @@ body {
 
 .main {
   display: flex;
-  padding: 16px;
+  padding: 13px;
   padding-top: 0;
 }
 
 .main-left {
   display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  height: 800px;
-  margin: 16px;
+  flex: 0.5;
+  flex-direction: column;
   color: #8b8b8b;
-  background-color: rgb(245, 245, 245);
-  border-radius: 3px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 .main-right {
   display: flex;
-  flex: 1;
+  flex: 1.5;
   flex-direction: column;
-  margin: 16px;
+  margin-left: 97px;
 }
 
 .right-box {

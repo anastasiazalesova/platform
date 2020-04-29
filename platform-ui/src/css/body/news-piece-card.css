@@ -13,6 +13,12 @@
 	color: #000;
 }
 
+.news-piece-card-title > h2 {
+	font-size: 24px;
+	line-height: 36px;
+	letter-spacing: -0.578824px;
+}
+
 .news-piece-card-time {
 	width: 20%;
 	right: 0%;
@@ -33,4 +39,11 @@
 	font-size: 18px;
 	line-height: 26px;
 	color: #000;
+}
+
+.new-piece-card-content > p {
+	line-height: inherit;
+	font-size: inherit;
+	padding-left: inherit;
+	padding-right: inherit;
 }
