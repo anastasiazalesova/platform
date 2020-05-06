@@ -6,7 +6,8 @@ class MarksController < ApplicationController
   # GET /marks.json
   def index
     authorize! :mark_read, Mark
-    @marks = Mark.all
+    @marks = Mark.where(student_id: current_user.id)
+    logger.info @marks
   end
 
   # GET /marks/1
@@ -17,7 +18,7 @@ class MarksController < ApplicationController
 
   # GET /marks/new
   def new
-    authorize! :mark_create, @mark
+    authorize! :mark_create, Mark
     @mark = Mark.new
   end
 
@@ -29,8 +30,14 @@ class MarksController < ApplicationController
   # POST /marks
   # POST /marks.json
   def create
-    authorize! :mark_create, @mark
-    @mark = Mark.new(mark_params)
+    authorize! :mark_create, Mark
+    logger.info "teacher id is " + mark_params['teacher_id']
+    user = User.find(mark_params['teacher_id'])
+    logger.info "User is " + user.to_json
+    @mark = Mark.new(
+      value: mark_params['value'], discipline_id: mark_params['discipline_id'],
+      teacher_id: user.id, student_id: current_user.id
+    )
 
     respond_to do |format|
       if @mark.save
@@ -77,6 +84,6 @@ class MarksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def mark_params
-      params.require(:mark).permit(:value, :discipline_id, :date)
+      params.require(:mark).permit(:value, :discipline_id, :date, :teacher_id)
     end
 end

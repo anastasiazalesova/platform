@@ -5,7 +5,7 @@ class ModsController < ApplicationController
   # GET /mods
   # GET /mods.json
   def index
-    authorize! :read, Mod
+    authorize! :mod_read, Mod
     @mods = Mod.all
   end
 

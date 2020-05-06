@@ -119,3 +119,137 @@ LinkRoleRight.create([
 
 	{:role => roleStudent, :right => rightMarkRead}
 ])
+
+NewsPiece.create([
+	{
+		:title => 'Студенческая оценка преподавания за 1 модуль у всех студентов',
+		:description => 'Внимание!<br/>Стартовала Студенческая оценка преподавания за 1 модуль. Всем студентам необходимо оценить те дисциплины, по которым проводились аудиторные занятия и запланированы зачеты.',
+		:time => DateTime.now
+	},
+	{
+		:title => 'Бизнес-инкубатор НИУ ВШЭ приглашает на лекцию «Экосистема»',
+		:description => '2 октября с 17:00 до 18:30 в Бизнес-инкубаторе НИУ ВШЭ расскажут про экосистему стартапов в России, США, Англии и Китае. Это шанс узнать о предпринимательстве и стартапах с разных точек зрения: со стороны предпринимателя.',
+		:time => DateTime.now
+	},
+	{
+		:title => 'Обратите внимание: используйте бразузеры последних версий!',
+		:description => 'Для корректной работы в системе LMS используйте браузер Google Chrome. В браузере должно быть разрешено выполнение JavaScript.',
+		:time => DateTime.now
+	}
+])
+
+credOne = Credential.create(login: 'admin1', password: 'admin1')
+credTwo = Credential.create(login: 'admin2', password: 'admin2')
+credThree = Credential.create(login: 'admin3', password: 'admin3')
+credFour = Credential.create(login: 'admin4', password: 'admin4')
+credFive = Credential.create(login: 'admin5', password: 'admin5')
+credSix = Credential.create(login: 'admin6', password: 'admin6')
+
+u1 = User.create(firstName: 'Анастасия', lastName: 'Залесова', role: roleAdmin, credential: credOne)
+u2 = User.create(firstName: 'Диана', lastName: 'Латыговская', role: roleAdmin, credential: credTwo)
+u3 = User.create(firstName: 'Дмитрий', lastName: 'Зражевский', role: roleAdmin, credential: credThree)
+u4 = User.create(firstName: 'Виталий', lastName: 'Петров', role: roleAdmin, credential: credFour)
+u5 = User.create(firstName: 'Людмила', lastName: 'Слепакова', role: roleAdmin, credential: credFive)
+u6 = User.create(firstName: 'Петр', lastName: 'Всеволод', role: roleAdmin, credential: credSix)
+
+courseOne = Course.create(:name => '1 курс');
+courseTwo = Course.create(:name => '2 курс');
+courseThree = Course.create(:name => '3 курс');
+courseFour = Course.create(:name => '4 курс');
+courseFive = Course.create(:name => '5 курс');
+
+modOne1 = Mod.create(:name => '1 модуль', :course => courseOne)
+modTwo1 = Mod.create(:name => '2 модуль', :course => courseOne)
+modThree1 = Mod.create(:name => '3 модуль', :course => courseOne)
+modFour1 = Mod.create(:name => '4 модуль', :course => courseOne)
+
+discOne1 = Discipline.create(:name => 'Математика', :mod => modOne1)
+discTwo1 = Discipline.create(:name => 'Дисциплина и Право', :mod => modOne1)
+discThree1 = Discipline.create(:name => 'АРТ-практика', :mod => modOne1)
+discFour1 = Discipline.create(:name => 'Математика лекции', :mod => modOne1)
+discFive1 = Discipline.create(:name => 'Астрономия', :mod => modOne1)
+
+Mark.create(value: 10, teacher_id: u2.id, student_id: u1.id, discipline: discOne1, date: DateTime.now)
+Mark.create(value: 10, teacher_id: u3.id, student_id: u1.id, discipline: discTwo1, date: DateTime.now)
+Mark.create(value: 10, teacher_id: u4.id, student_id: u1.id, discipline: discThree1, date: DateTime.now)
+Mark.create(value: 10, teacher_id: u5.id, student_id: u1.id, discipline: discFour1, date: DateTime.now)
+Mark.create(value: 10, teacher_id: u6.id, student_id: u1.id, discipline: discFive1, date: DateTime.now)
+
+Material.create(name: 'Математика, 1 курс', url: 'https://drive.google.com/file/d/1sBtDeEN_2jwG8WdcfMmWD81RQvC2C6mv/preview', discipline: discOne1)
+Material.create(name: 'Дисциплина и Право, 1 курс', url: 'https://drive.google.com/file/d/1JuJ4vcLPheMCbHqR-YWTJ6DOatD2Y26B/preview', discipline: discTwo1)
+Material.create(name: 'АРТ-практика, 1 курс', url: 'https://drive.google.com/file/d/1Zvi1l0hvCynYJhPXt8nRcW6FTKTT7X7k/preview', discipline: discThree1)
+
+discOne2 = Discipline.create(:name => 'Математика', :mod => modTwo1)
+discTwo2 = Discipline.create(:name => 'Дисциплина и Право', :mod => modTwo1)
+discThree2 = Discipline.create(:name => 'АРТ-практика', :mod => modTwo1)
+discFour2 = Discipline.create(:name => 'Математика лекции', :mod => modTwo1)
+discFive2 = Discipline.create(:name => 'Астрономия', :mod => modTwo1)
+
+Mark.create(value: 9, teacher_id: u2.id, student_id: u1.id, discipline: discOne2, date: DateTime.now)
+Mark.create(value: 8, teacher_id: u3.id, student_id: u1.id, discipline: discTwo2, date: DateTime.now)
+Mark.create(value: 7, teacher_id: u4.id, student_id: u1.id, discipline: discThree2, date: DateTime.now)
+Mark.create(value: 6, teacher_id: u5.id, student_id: u1.id, discipline: discFour2, date: DateTime.now)
+Mark.create(value: 5, teacher_id: u6.id, student_id: u1.id, discipline: discFive2, date: DateTime.now)
+
+discOne3 = Discipline.create(:name => 'Математика', :mod => modThree1)
+discTwo3 = Discipline.create(:name => 'Дисциплина и Право', :mod => modThree1)
+discThree3 = Discipline.create(:name => 'АРТ-практика', :mod => modThree1)
+discFour3 = Discipline.create(:name => 'Математика лекции', :mod => modThree1)
+discFive3 = Discipline.create(:name => 'Астрономия', :mod => modThree1)
+
+Mark.create(value: 2, teacher_id: u2.id, student_id: u1.id, discipline: discOne3, date: DateTime.now)
+Mark.create(value: 10, teacher_id: u2.id, student_id: u1.id, discipline: discOne3, date: DateTime.now)
+Mark.create(value: 3, teacher_id: u3.id, student_id: u1.id, discipline: discTwo3, date: DateTime.now)
+Mark.create(value: 4, teacher_id: u4.id, student_id: u1.id, discipline: discThree3, date: DateTime.now)
+Mark.create(value: 5, teacher_id: u5.id, student_id: u1.id, discipline: discFour3, date: DateTime.now)
+
+discOne4 = Discipline.create(:name => 'Математика', :mod => modFour1)
+discTwo4 = Discipline.create(:name => 'Дисциплина и Право', :mod => modFour1)
+discThree4 = Discipline.create(:name => 'АРТ-практика', :mod => modFour1)
+discFour4 = Discipline.create(:name => 'Математика лекции', :mod => modFour1)
+discFive4 = Discipline.create(:name => 'Астрономия', :mod => modFour1)
+
+Mark.create(value: 10, teacher_id: u3.id, student_id: u1.id, discipline: discTwo4, date: DateTime.now)
+Mark.create(value: 8, teacher_id: u4.id, student_id: u1.id, discipline: discThree4, date: DateTime.now)
+Mark.create(value: 9, teacher_id: u5.id, student_id: u1.id, discipline: discFour4, date: DateTime.now)
+
+modOne2 = Mod.create(:name => '1 модуль', :course => courseTwo)
+modTwo2 = Mod.create(:name => '2 модуль', :course => courseTwo)
+modThree2 = Mod.create(:name => '3 модуль', :course => courseTwo)
+modFour2 = Mod.create(:name => '4 модуль', :course => courseTwo)
+
+discOne1 = Discipline.create(:name => 'Математика', :mod => modOne2)
+discTwo1 = Discipline.create(:name => 'Дисциплина и Право', :mod => modOne2)
+discThree1 = Discipline.create(:name => 'АРТ-практика', :mod => modOne2)
+discFour1 = Discipline.create(:name => 'Математика лекции', :mod => modOne2)
+discFive1 = Discipline.create(:name => 'Астрономия', :mod => modOne2)
+
+modOne3 = Mod.create(:name => '1 модуль', :course => courseThree)
+modTwo3 = Mod.create(:name => '2 модуль', :course => courseThree)
+modThree3 = Mod.create(:name => '3 модуль', :course => courseThree)
+modFour3 = Mod.create(:name => '4 модуль', :course => courseThree)
+
+modOne4 = Mod.create(:name => '1 модуль', :course => courseFour)
+modTwo4 = Mod.create(:name => '2 модуль', :course => courseFour)
+modThree4 = Mod.create(:name => '3 модуль', :course => courseFour)
+modFour4 = Mod.create(:name => '4 модуль', :course => courseFour)
+
+modOne5 = Mod.create(:name => '1 модуль', :course => courseFive)
+modTwo5 = Mod.create(:name => '2 модуль', :course => courseFive)
+modThree5 = Mod.create(:name => '3 модуль', :course => courseFive)
+modFour5 = Mod.create(:name => '4 модуль', :course => courseFive)
+
+Email.create(
+	title: 'Успеваемость',
+	body: 'Уважаемая Анастасия! Ваша успеваемость по Математике в 3 модуле вызывает опасения. Все в порядке? Вы - наша лучшая ученица и надежда всего коллектива. С Уважением, Диана Валерьевна',
+	supplier_id: u2.id,
+	consumer_id: u1.id,
+	new: true
+)
+Email.create(
+	title: 'Поздравления',
+	body: 'Уважаемая Анастасия! Поздравляем Вас с успешным прохождением теста на знание React JS. Вы были выбраны участником хакатона по JS "React для самых самых". С Уважением, Петр Григорьевич',
+	supplier_id: u6.id,
+	consumer_id: u1.id,
+	new: true
+);

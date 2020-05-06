@@ -1,0 +1,29 @@
+<div class="page-header">
+  <%= link_to emails_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_email_path(@email), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show email</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Title:</dt>
+  <dd><%= @email.title %></dd>
+
+  <dt>Body:</dt>
+  <dd><%= @email.body %></dd>
+
+  <dt>Supplier:</dt>
+  <dd><%= @email.supplier_id %></dd>
+
+  <dt>Consumer:</dt>
+  <dd><%= @email.consumer_id %></dd>
+
+  <dt>New:</dt>
+  <dd><%= @email.new %></dd>
+
+</dl>

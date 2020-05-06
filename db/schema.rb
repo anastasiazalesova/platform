@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_16_203133) do
+ActiveRecord::Schema.define(version: 2020_05_04_123759) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 2020_04_16_203133) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mod_id"], name: "index_disciplines_on_mod_id"
+  end
+
+  create_table "emails", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.integer "supplier_id"
+    t.integer "consumer_id"
+    t.boolean "new"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["consumer_id"], name: "index_emails_on_consumer_id"
+    t.index ["supplier_id"], name: "index_emails_on_supplier_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -66,6 +78,15 @@ ActiveRecord::Schema.define(version: 2020_04_16_203133) do
     t.index ["discipline_id"], name: "index_marks_on_discipline_id"
     t.index ["student_id"], name: "index_marks_on_student_id"
     t.index ["teacher_id"], name: "index_marks_on_teacher_id"
+  end
+
+  create_table "materials", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.integer "discipline_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discipline_id"], name: "index_materials_on_discipline_id"
   end
 
   create_table "mods", force: :cascade do |t|

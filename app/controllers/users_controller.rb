@@ -29,26 +29,19 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    role = Role.where(:name => user_params[:role].to_s).first
+    role = Role.where(:name => 'ROLE_ADMIN').first
     if !role
-      respond_to do |format|
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+      render json: { errors: @user.errors, status: :unprocessable_entity }
       return
     end
     credential = Credential.new(:login => user_params[:login], :password => user_params[:password])
 
     @user = User.new(:firstName => user_params[:firstName], :lastName => user_params[:lastName], :role => role, :credential => credential)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :root, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      render json: { status: :created, location: @user }
+    else
+      render json: { errors: @user.errors, status: :unprocessable_entity }
     end
   end
 
@@ -86,6 +79,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:firstName, :lastName, :role, :login, :password)
+      params.require(:user).permit(:firstName, :lastName, :role, :login, :password, :password_confirmation)
     end
 end

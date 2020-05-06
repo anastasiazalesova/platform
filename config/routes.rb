@@ -3,18 +3,20 @@ Rails.application.routes.draw do
   scope(:path => '/railsapp') do
     resources :events
     resources :news_pieces
-    get 'sessions/new'
-    get 'sessions/create'
-    get 'sessions/destroy'
+    post '/log_in', to: 'sessions#create'
+    delete '/log_out', to: 'sessions#destroy'
+    get '/logged_in', to: 'sessions#is_logged_in?'
     resources :marks
     resources :groups
     resources :users
     resources :credentials
     resources :roles
     resources :rights
+    resources :materials
     resources :disciplines
     resources :mods
     resources :courses
+    resources :emails
 
     resources :sessions, only: [:new, :create, :destroy]
     get 'signup', to: 'users#new', as: 'signup'
