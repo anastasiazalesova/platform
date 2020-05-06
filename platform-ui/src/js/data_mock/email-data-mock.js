@@ -32,9 +32,56 @@ const messages = new Map([
 	]],
 ]);
 
+const authors = [
+	{
+		name: 'Алешина Татьяна Анатольевна',
+		login: 'AleshinaTA'
+	},
+	{
+		name: 'Вавилова Татьяна Сергеевна',
+		login: 'VavilovaTS'
+	},
+	{
+		name: 'Гордеева Катерина Георгиевна',
+		login: 'GordeevaKG'
+	},
+	{
+		name: 'Демидова Екатерина Павловна',
+		login: 'DemidovaEP'
+	},
+	{
+		name: 'Аленина Татьяна Георгиевна',
+		login: 'AleninaTG'
+	},
+	{
+		name: 'Волкова Альбина Анатольевна',
+		login: 'VolkovaAA'
+	},
+	{
+		name: 'Георгиева Галина Анатольевна',
+		login: 'GeorgievaGA'
+	},
+	{
+		name: 'Дубнова Татьяна Алексеевна',
+		login: 'DubnovaTA'
+	},
+	{
+		name: 'Ежкова Марина Дмитриевна',
+		login: 'EjkhovaMD'
+	},
+	{
+		name: 'Жагрова Елена Николаевна',
+		login: 'JagrovaEN'
+	}
+];
+
 class EmailDataMock {
 	getFolders() {
 		return folders;
+	}
+
+	getAuthors() {
+		return authors;
 	}
 
 	getMessagesByFolderId(folderId) {

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "create-react-class": "^15.6.3",
+    "history": "^4.10.1",
     "html2canvas": "^1.0.0-rc.5",
     "jspdf": "^1.5.3",
     "react": "^16.13.1",

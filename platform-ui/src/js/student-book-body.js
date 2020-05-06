@@ -6,17 +6,81 @@ import Event from './events/event.js';
 import Email from './email/email.js';
 import Select from 'react-select';
 import StudentBookMock from './data_mock/student-book-data-mock.js';
+import axios from 'axios'
+import { loadAllDisciplines, loadUsersById, handleError } from './data-loader.js'
+import { coursesMapProcessor } from './data-utils.js'
+
 
 const mock = new StudentBookMock();
 
 class StudentBookBody extends React.Component {
+
   state = {
-    selectedOption: mock.options()[0]
+    coursesMap: null,
+    selectedOption: null,
+    options: null
   };
+
+  componentWillMount() {
+    handleError(
+      loadAllDisciplines((coursesMap) => {
+        this.setState({
+          coursesMap: coursesMap
+        });
+      }).then(response => axios.get('http://localhost:3000/railsapp/marks.json', {withCredentials: true}))
+        .then(response => {
+          let r = response.data;
+          console.log('marks - ', r);
+          let marks = new Set();
+          Array.from(this.state.coursesMap.values()).map(course => {
+            Array.from(course.modsMap.values()).map(modsVal => {
+              r.map(mark => {
+                let discipline = modsVal.disciplinesMap.get(mark.discipline_id);
+                if (discipline && !discipline.marks.includes(mark)) {
+                  marks.add(mark);
+                  discipline.marks.push(mark);
+                }
+              })
+            })
+            return course;
+          })
+          let rs = [];
+
+          for (let m of marks) {
+            if (!m.teacher_id) continue;
+            rs.push(m.teacher_id);
+          }
+          return loadUsersById(rs, (usersMap) => {
+            coursesMapProcessor(this.state.coursesMap, (course, mod, discipline) => {
+              for (let mark of discipline.marks) {
+                if (mark.teacher_id) {
+                  let user = usersMap.get(mark.teacher_id);
+                  if (user) {
+                    mark.teacherName = user.firstName + " " + user.lastName
+                  }
+                }
+              }
+            });
+
+            let options = Array.from(this.state.coursesMap.entries()).map(pair => {
+              return {
+                value: pair[1].courseId,
+                label: pair[1].courseName
+              }
+            });
+            console.log('options - ', options);
+            this.setState({
+              selectedOption: options[0],
+              options: options
+            })
+          });
+        })
+    )
+  }
 
   handleChange = selectedOption => {
     this.setState(
-      { 
+      {
         selectedOption
       }
     );
@@ -29,37 +93,25 @@ class StudentBookBody extends React.Component {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
       pdf.addImage(imgData, 'PNG', 0, 0);
-      pdf.save("download.pdf");  
+      pdf.save("download.pdf");
     });
   }
 
   render(props) {
-    const { selectedOption } = this.state;
+    const { selectedOption, coursesMap } = this.state;
+    if (!selectedOption) {
+      return <div></div>;
+    }
 
-    let rows = mock.getModulesByCourseId(selectedOption.value);
-    console.log('rows: ', rows);
-    console.log('selectedOption: ', selectedOption);
-    if (rows && rows.length > 0) {
-      console.log('after if rows: ', rows);
-      rows = rows
-          .map((it) => { return {
-            disciplines: mock.getDisciplinesByModuleId(it),
-            accumulatedResult: tableRowTitle(mock.getModuleNamebyModuleId(it))
-          };})
-          .map((it) => {
-            let result = [it.accumulatedResult];
-            if (it.disciplines && it.disciplines.length > 0) {
-              it.disciplines
-                  .map((it1) => mock.getDisciplineDataByDisciplineId(it1))
-                  .forEach((it1) => {
-                    if (it1) {
-                      result.push(tableRowData(it1));
-                    }
-                  });
-            }
-            console.log('result: ', result);
-            return result;
-          });
+    let course = coursesMap.get(selectedOption.value);
+    let rows = [];
+    if (course) {
+      Array.from(course.modsMap.values()).map(mod => {
+        rows.push(tableRowTitle(mod.modName));
+        Array.from(mod.disciplinesMap.values()).map(discipline =>
+          rows.push(tableRowData(discipline))
+        )
+      })
     }
 
     return (
@@ -71,9 +123,9 @@ class StudentBookBody extends React.Component {
             styles={{borderRadius: '14px'}}
             value={selectedOption}
             onChange={this.handleChange}
-            options={mock.options()}
+            options={this.state.options}
             classNamePrefix="student-book-combo-box"
-          />     
+          />
         </div>
       </div>
       <div className="student-book-description-container">
@@ -107,14 +159,36 @@ class StudentBookBody extends React.Component {
       </div>
     </section>
   );
-  } 
+  }
 }
 
 function tableRowTitle(title) {
+  console.log('title - ', title);
   return <tr><td className="text-left" style={{color: '#007AFF'}} colSpan="6">{title}</td></tr>;
 };
 
-function tableRowData(discipline) {
+function tableRowData(disciplineIn) {
+  let marks = disciplineIn.marks;
+  let marksLength = marks.length;
+  let marksMoreThanZero = marksLength > 0;
+  let tenPointSystemPoint = 0;
+  marks.map(m => tenPointSystemPoint += m.value);
+  tenPointSystemPoint = marksMoreThanZero ? tenPointSystemPoint / marksLength : 0;
+
+  let fivePointSystemPoint = marksMoreThanZero ? tenPointSystemPoint / 2 : 0;
+  for (let m of marks) {
+    if (m.teacherName) {
+      console.log('teacher name - ', m.teacherName);
+    }
+  }
+  let discipline = {
+    name: disciplineIn.disciplineName,
+    retries: marksLength,
+    tenPointSystem: tenPointSystemPoint,
+    fivePointSystem: fivePointSystemPoint,
+    lastTry: marksMoreThanZero ? new Date(marks[marksLength - 1].created_at).toLocaleDateString("en-US") : 'нет',
+    teacher: marksMoreThanZero ? marks[marksLength - 1].teacherName : null
+  };
   return <tr>
       <td className="text-left">{discipline.name}</td>
       <td className="text-center">{discipline.tenPointSystem}</td>

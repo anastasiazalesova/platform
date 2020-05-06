@@ -149,3 +149,60 @@ a {
   right: 0%;
   top: calc(50% - 20px/2);
 }
+
+.header-all-sections {
+  /*display: none;*/
+  position: absolute;
+  background-color: #fff;
+  top: 60px;
+  height: 498px;
+  width: 100%;
+  z-index: 10;
+}
+
+.header-all-sections-hidden {
+  display: none;
+}
+
+.header-all-sections-container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  padding-left: 216px;
+  padding-right: 216px;
+}
+
+.header-all-sections-column {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.header-all-sections-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-all-sections-icon {
+  background-color: #F2F2F7;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.header-all-sections-icon > img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header-all-sections-title > p {
+  text-align: left;
+  vertical-align: middle;
+  margin-left: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

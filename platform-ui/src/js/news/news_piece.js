@@ -10,7 +10,7 @@ function NewsPiece(props) {
         <div className="news-piece-card-time"><p>{props.time}</p></div>
       </div>
       <div className="news-piece-card-content">
-      <p>{props.content}</p>
+      <p dangerouslySetInnerHTML={{__html: props.content}}></p>
       </div>
     </div>
   );

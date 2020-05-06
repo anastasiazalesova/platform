@@ -5,20 +5,64 @@ import Email from './email/email.js';
 import Select from 'react-select';
 import EmailDataMock from './data_mock/email-data-mock.js'
 import EmailScroll from './email/email-scroll.js'
+import { loadMessages, loadUsersById, handleError } from './data-loader.js'
+
 
 const mock = new EmailDataMock();
 
 class EmailBody extends React.Component {
 
+  componentWillMount() {
+    let foldersMapTmp;
+    console.log('user auth - ', this.props);
+    handleError(
+      loadMessages(this.props.auth.user, (foldersMap) => {
+        console.log('foldersMap - ', foldersMap);
+        foldersMapTmp = foldersMap;
+
+      }).then(() => {
+        let users = new Set([]);
+        Array.from(foldersMapTmp.values()).forEach(folder => {
+          Array.from(folder.messagesMap.values()).forEach(msg => {
+            users.add(msg.supplier_id);
+            users.add(msg.consumer_id);
+          });
+        });
+        return loadUsersById(Array.from(users.entries()), (usersMap) => {
+          Array.from(foldersMapTmp.values()).forEach(folder => {
+            Array.from(folder.messagesMap.values()).forEach(msg => {
+              msg.supplier = usersMap.get(msg.supplier_id);
+              msg.consumer = usersMap.get(msg.consumer_id);
+            })
+          })
+
+          let options = Array.from(foldersMapTmp.entries()).map(pair => {
+            return {
+              value: pair[0],
+              label: pair[1].name
+            }
+          });
+          console.log('options - ', options);
+          this.setState({
+            foldersMap: foldersMapTmp,
+            selectedOption: options[0],
+            options: options
+          })
+        });
+      })
+    )
+  }
+
   state = {
     selectedOption: mock.getFolders()[0],
     selectedMessage: null,
+    foldersMap: null,
     itemsRefs: []
   };
 
   handleChange = selectedOption => {
     this.setState(
-      { 
+      {
         selectedOption
       },
       () => console.log(`Option selected:`, this.state.selectedOption)
@@ -32,11 +76,18 @@ class EmailBody extends React.Component {
   }
 
   render() {
-    const { selectedOption } = this.state;
+    const { selectedOption, foldersMap, options } = this.state;
 
-    let items = mock.getMessagesByFolderId(selectedOption.value).map((it) => {
+    if (!selectedOption || !foldersMap) {
+      return <div></div>;
+    }
+
+    let items = Array.from(foldersMap.get(selectedOption.value).messagesMap.values()).map((it) => {
       console.log('selectedOption: ', selectedOption);
-      let message = it;
+      let message = { ...it };
+      if (selectedOption.value === 'outcome') {
+        message.new = 0;
+      }
       let ref = React.createRef();
       this.state.itemsRefs.push(ref);
       return <EmailScroll message={message} ref={ref} handleClick={this.handleClick} />;
@@ -62,7 +113,7 @@ class EmailBody extends React.Component {
                     styles={{borderRadius: '14px'}}
                     value={selectedOption}
                     onChange={this.handleChange}
-                    options={mock.getFolders()}
+                    options={options}
                     classNamePrefix="email-dir-combo-box"
                   />
                 </div>
@@ -72,10 +123,11 @@ class EmailBody extends React.Component {
               </div>
             </div>
             <div className="main-right">
+              <div><a href="/email-send" className="square_btn">Написать письмо</a></div>
               {this.state.selectedMessage && <>
                 <div className="email-selected-message-header">
                   <div className="email-selected-message-header-author">{this.state.selectedMessage.author}</div>
-                  <div className="email-selected-message-header-time">{this.state.selectedMessage.time}</div>
+                  <div className="email-selected-message-header-time">{this.state.selectedMessage.created_at}</div>
                 </div>
                 <div className="email-selected-message-title"><h1>{this.state.selectedMessage.title}</h1></div>
                 <div className="email-selected-message-body">{this.state.selectedMessage.body}</div>
@@ -86,7 +138,7 @@ class EmailBody extends React.Component {
         </div>
       </section>
     );
-  } 
+  }
 }
 
 export default EmailBody;

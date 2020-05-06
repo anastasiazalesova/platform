@@ -6,3 +6,34 @@
 	padding-left: 10px;
 	margin-top: 0px;
 }
+
+.square_btn {
+	min-width: 170px;
+  position: relative;
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  color: #FFF;
+  background: #007AFF;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+	line-height: 14px;
+	float: right;
+
+	letter-spacing: -0.337647px;
+}
+
+.square_btn:active {/*onClick*/
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.square_btn:focus {
+	outline: none;
+  box-shadow: none !important;
+  text-shadow: none;
+}

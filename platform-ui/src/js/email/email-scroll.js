@@ -35,6 +35,12 @@ class EmailScroll extends React.Component {
 		if (this.state.selected == true) {
 			cardClassName = cardClassName + " email-card-selected";
 		}
+
+		let supplierName = !this.props.message.supplier ? 'Неизвестеный отправитель' :
+			!this.props.message.supplier.firstName || !this.props.message.supplier.lastName ?
+			'Пользователь с айди ' + this.props.message.supplier.id :
+			this.props.message.supplier.firstName + ' ' + this.props.message.supplier.lastName;
+
 		return (
 			<div className={cardClassName} onClick={() => {
 				if (this.props.handleClick) {
@@ -43,10 +49,10 @@ class EmailScroll extends React.Component {
 				this.handleClick();
 			}}>
 	      <div className="email-scroll-view-card-header">
-	        <div className="email-scroll-view-card-header-author"><p>{this.props.message.author}</p></div>
+	        <div className="email-scroll-view-card-header-author"><p>{supplierName}</p></div>
 	        <div className="email-scroll-view-card-header-status-time">
-	          {this.props.message.isNew === true && <div className="email-scroll-view-card-header-status"></div>}
-	          <div className="email-scroll-view-card-header-time"><p>{this.props.message.time}</p></div>
+	          {this.props.message.new == 1 && <div className="email-scroll-view-card-header-status"></div>}
+	          <div className="email-scroll-view-card-header-time"><p>{this.props.message.created_at}</p></div>
 	        </div>
 	      </div>
 	      <div className="email-scroll-view-card-title">
