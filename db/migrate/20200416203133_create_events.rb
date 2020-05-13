@@ -5,6 +5,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.text :description
       t.integer :tag
       t.string :imageUrl
+      t.references :course, foreign_key: true
 
       t.timestamps
     end

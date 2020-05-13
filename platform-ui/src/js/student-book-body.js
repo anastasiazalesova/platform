@@ -183,9 +183,9 @@ function tableRowData(disciplineIn) {
   }
   let discipline = {
     name: disciplineIn.disciplineName,
-    retries: marksLength,
+    retries: marksLength > 0 ? marksLength - 1 : 0,
     tenPointSystem: tenPointSystemPoint,
-    fivePointSystem: fivePointSystemPoint,
+    fivePointSystem: fivePointSystemPoint.toFixed(),
     lastTry: marksMoreThanZero ? new Date(marks[marksLength - 1].created_at).toLocaleDateString("en-US") : 'нет',
     teacher: marksMoreThanZero ? marks[marksLength - 1].teacherName : null
   };

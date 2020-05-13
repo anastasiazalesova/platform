@@ -64,13 +64,20 @@ const UserContextProvider = props => {
   console.log('state.auth - ', state.auth);
   if (state.auth.isLoggedIn === 0) {
     console.log('pathname - ', location.pathname);
+    let userResponse;
     axios.get('http://localhost:3000/railsapp/logged_in', {withCredentials: true})
       .then(response => {
-        if (response.data.logged_in) {
-          handleLogin(response);
+        userResponse = response;
+        if (userResponse.data.logged_in) {
+          return axios.get('http://localhost:3000/railsapp/courses/' + userResponse.data.user.course_id + '.json', {withCredentials: true})
         } else {
           handleLogout();
         }
+      })
+      .then(response => {
+        console.log("course response", response);
+        userResponse.data.user.course = response.data;
+        handleLogin(userResponse);
       })
       .catch(error => {
         console.log('api errors:', error);
@@ -116,7 +123,7 @@ class App extends React.Component {
   body(auth) {
     return (
       <div className="wrapper">
-        <Header />
+        <Header auth={auth} />
         <Route exact path="/courses" component={CoursesBody}/>
         <Route exact path="/student-book" component={StudentBookBody}/>
         <Route exact path="/email" render={props => (<EmailBody auth={auth}/>)}/>
@@ -126,7 +133,7 @@ class App extends React.Component {
         <Route exact path="/choose-minor" component={ChooseMinorBody}/>
         <Route exact path="/choose-course" component={ChooseCourseBody}/>
         <Route exact path="/KP-BKP" component={BkpKpBody}/>
-        <Route exact path="/" component={Body}/>
+        <Route exact path="/" render={props => (<Body auth={auth}/>)}/>
         <Route exact path='/login' render={props => (<Login history={customHistory} handleLogin={auth.handleLogin} loggedInStatus={auth.isLoggedIn === 1}/>)}/>
         <Route exact path='/signup' render={props => (<Signup history={customHistory} handleLogin={auth.handleLogin} loggedInStatus={auth.isLoggedIn === 1}/>)}/>
       </div>

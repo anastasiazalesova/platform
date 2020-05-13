@@ -50,8 +50,10 @@ ActiveRecord::Schema.define(version: 2020_05_04_123759) do
     t.text "description"
     t.integer "tag"
     t.string "imageUrl"
+    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_events_on_course_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -122,8 +124,10 @@ ActiveRecord::Schema.define(version: 2020_05_04_123759) do
     t.string "lastName"
     t.integer "role_id"
     t.integer "credential_id"
+    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_users_on_course_id"
     t.index ["credential_id"], name: "index_users_on_credential_id"
     t.index ["role_id"], name: "index_users_on_role_id"
   end

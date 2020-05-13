@@ -4,6 +4,7 @@ import { Route, Link} from 'react-router-dom';
 import useDocumentScrollThrottled from './useDocumentScrollThrottled.js';
 
 function Header(props) {
+  console.log("header props - ", props);
   const [shouldHideHeader, setShouldHideHeader] = useState(false);
   const [shouldShowShadow, setShouldShowShadow] = useState(false);
   const [shoundShowAllSections, setShoundShowAllSections] = useState(false);
@@ -27,6 +28,9 @@ function Header(props) {
   const hiddenStyle = shouldHideHeader ? 'hidden' : '';
   const allSectionsStyle = shoundShowAllSections && !shouldHideHeader ? 'header-all-sections' : 'header-all-sections-hidden';
   console.log('hover?', allSectionsStyle);
+  if (!props.auth) {
+    return <div></div>;
+  }
   return (
     <header className={`header ${shadowStyle} ${hiddenStyle}`} onMouseLeave={() => {setShoundShowAllSections(false)}}>
       <div className="logo"><a href="/">LMS</a></div>
@@ -77,93 +81,135 @@ function Header(props) {
       <div className={`${allSectionsStyle}`} onMouseEnter={() => {setShoundShowAllSections(true)}} onMouseLeave={() => {setShoundShowAllSections(false)}}>
         <div className="header-all-sections-container">
           <div className="header-all-sections-column">
-            <div className="header-all-sections-card">НЕ ЗАБУДЬ ОЦЕНИТЬ</div>
-            <Link to="/point-your-courses">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/point-your-courses.png"/></div>
-                <div className="header-all-sections-title"><p>Оцени свои курсы</p></div>
-              </div>
-            </Link>
-            <Link to="/point-colleagues">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/point-colleagues.png"/></div>
-                <div className="header-all-sections-title"><p>Оценка сотрудников</p></div>
-              </div>
-            </Link>
+            {pointColumn(props.auth.user.course_id)}
           </div>
           <div className="header-all-sections-column">
-            <div className="header-all-sections-card">ВЫБОР ДИСЦИПЛИН И ТЕМ</div>
-            <Link to="/choose-minor">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/choose-minor.png"/></div>
-                <div className="header-all-sections-title"><p>Выбор майнора</p></div>
-              </div>
-            </Link>
-            <Link to="/choose-course">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/choose-course.png"/></div>
-                <div className="header-all-sections-title"><p>Курсы по выбору</p></div>
-              </div>
-            </Link>
-            <Link to="/themes-KP-BKP">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/themes-KP-BKP.png"/></div>
-                <div className="header-all-sections-title"><p>Темы KP/BKP</p></div>
-              </div>
-            </Link>
-            <Link to="/KP-BKP">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/KP-BKP.png"/></div>
-                <div className="header-all-sections-title"><p>KP/BKP</p></div>
-              </div>
-            </Link>
+            {chooseColumn(props.auth.user.course_id)}
           </div>
           <div className="header-all-sections-column">
-            <div className="header-all-sections-card">ЗАЯВКИ</div>
-            <Link to="/req-pgas">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/req-pgas.png"/></div>
-                <div className="header-all-sections-title"><p>Заявка на ПГАС</p></div>
-              </div>
-            </Link>
-            <Link to="/transfer">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/transfer.png"/></div>
-                <div className="header-all-sections-title"><p>Перевод</p></div>
-              </div>
-            </Link>
-            <Link to="/relocation">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/relocation.png"/></div>
-                <div className="header-all-sections-title"><p>Переезд из общежития</p></div>
-              </div>
-            </Link>
-            <Link to="/practic-req">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/practic-req.png"/></div>
-                <div className="header-all-sections-title"><p>Заявка на практику</p></div>
-              </div>
-            </Link>
-            <Link to="/vbm-req">
-              <div className="header-all-sections-card">
-                <div className="header-all-sections-icon"><img src="/vbm-req.png"/></div>
-                <div className="header-all-sections-title"><p>Заявка на ВБМ</p></div>
-              </div>
-            </Link>
+            {requestColumn(props.auth.user.course_id)}
           </div>
           <div className="header-all-sections-column">
-          <div className="header-all-sections-card">ПОМОЩЬ</div>
-          <Link to="/support">
-            <div className="header-all-sections-card">
-              <div className="header-all-sections-icon"><img src="/support.png"/></div>
-              <div className="header-all-sections-title"><p>Служба поддержки</p></div>
-            </div>
-          </Link>
+            {helpColumn()}
           </div>
         </div>
       </div>
     </header>
   );
+}
+
+function pointColumn(courseNumber) {
+  return (<><div className="header-all-sections-card">НЕ ЗАБУДЬ ОЦЕНИТЬ</div>
+  <Link to="/point-your-courses">
+    <div className="header-all-sections-card">
+      <div className="header-all-sections-icon"><img src="/point-your-courses.png"/></div>
+      <div className="header-all-sections-title"><p>Оцени свои курсы</p></div>
+    </div>
+  </Link>
+  <Link to="/point-colleagues">
+    <div className="header-all-sections-card">
+      <div className="header-all-sections-icon"><img src="/point-colleagues.png"/></div>
+      <div className="header-all-sections-title"><p>Оценка сотрудников</p></div>
+    </div>
+  </Link></>);
+}
+
+function chooseColumn(courseNumber) {
+  let result = [];
+  let courseNumberBetweenOneFour = courseNumber > 1 && courseNumber < 4;
+
+  if (courseNumberBetweenOneFour) {
+    result.push(<Link to="/choose-minor">
+      <div className="header-all-sections-card">
+        <div className="header-all-sections-icon"><img src="/choose-minor.png"/></div>
+        <div className="header-all-sections-title"><p>Выбор майнора</p></div>
+      </div>
+    </Link>);
+  }
+  if (courseNumber > 0) {
+    result.push(<Link to="/choose-course">
+      <div className="header-all-sections-card">
+        <div className="header-all-sections-icon"><img src="/choose-course.png"/></div>
+        <div className="header-all-sections-title"><p>Курсы по выбору</p></div>
+      </div>
+    </Link>);
+  }
+  if (courseNumber > 1) {
+    result.push(<Link to="/themes-KP-BKP">
+      <div className="header-all-sections-card">
+        <div className="header-all-sections-icon"><img src="/themes-KP-BKP.png"/></div>
+        <div className="header-all-sections-title"><p>Темы KP/BKP</p></div>
+      </div>
+    </Link>);
+  }
+  if (courseNumber > 1) {
+    result.push(<Link to="/KP-BKP">
+      <div className="header-all-sections-card">
+        <div className="header-all-sections-icon"><img src="/KP-BKP.png"/></div>
+        <div className="header-all-sections-title"><p>KP/BKP</p></div>
+      </div>
+    </Link>);
+  }
+  console.log("choose courseNumber", courseNumber);
+  return (<><div className="header-all-sections-card">ВЫБОР ДИСЦИПЛИН И ТЕМ</div>
+  {result}
+  </>);
+}
+
+function requestColumn(courseNumber) {
+  let result = [];
+
+  if (courseNumber > 0) {
+    result.push(<Link to="/req-pgas">
+      <div className="header-all-sections-card">
+        <div className="header-all-sections-icon"><img src="/req-pgas.png"/></div>
+        <div className="header-all-sections-title"><p>Заявка на ПГАС</p></div>
+      </div>
+    </Link>);
+    result.push(<Link to="/transfer">
+      <div className="header-all-sections-card">
+        <div className="header-all-sections-icon"><img src="/transfer.png"/></div>
+        <div className="header-all-sections-title"><p>Перевод</p></div>
+      </div>
+    </Link>);
+  }
+  if (courseNumber > 2) {
+    result.push(<Link to="/relocation">
+        <div className="header-all-sections-card">
+          <div className="header-all-sections-icon"><img src="/relocation.png"/></div>
+          <div className="header-all-sections-title"><p>Переезд из общежития</p></div>
+        </div>
+      </Link>);
+  }
+  if (courseNumber > 3) {
+    result.push(<Link to="/practic-req">
+      <div className="header-all-sections-card">
+        <div className="header-all-sections-icon"><img src="/practic-req.png"/></div>
+        <div className="header-all-sections-title"><p>Заявка на практику</p></div>
+      </div>
+    </Link>);
+  }
+  if (courseNumber > 1) {
+    result.push(<Link to="/vbm-req">
+      <div className="header-all-sections-card">
+        <div className="header-all-sections-icon"><img src="/vbm-req.png"/></div>
+        <div className="header-all-sections-title"><p>Заявка на ВБМ</p></div>
+      </div>
+    </Link>);
+  }
+  return (<><div className="header-all-sections-card">ЗАЯВКИ</div>
+    {result}
+  </>);
+}
+
+function helpColumn() {
+  return (<><div className="header-all-sections-card">ПОМОЩЬ</div>
+  <Link to="/support">
+    <div className="header-all-sections-card">
+      <div className="header-all-sections-icon"><img src="/support.png"/></div>
+      <div className="header-all-sections-title"><p>Служба поддержки</p></div>
+    </div>
+  </Link></>);
 }
 
 export default Header;

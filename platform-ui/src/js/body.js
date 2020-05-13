@@ -6,7 +6,8 @@ import { loadEvents, handleError } from './data-loader.js'
 
 class Body extends React.Component {
   state = {
-    news: null
+    news: null,
+    eventsMap: null
   };
 
   componentDidMount () {
@@ -15,11 +16,31 @@ class Body extends React.Component {
       this.setState({news: result});
     });
     handleError(
-      loadEvents((events) => console.log('events - ', events))
+      loadEvents((events) => {
+        let eventsMap = new Map([]);
+        console.log('events - ', events);
+        events.forEach(item => {
+          if (eventsMap.has(item.course_id)) {
+            eventsMap.get(item.course_id).push(item);
+          } else {
+            let items = [];
+            items.push(item);
+            eventsMap.set(item.course_id, items);
+          }
+        });
+        this.setState({
+          eventsMap: eventsMap
+        });
+
+      })
     )
   }
 
   render() {
+    console.log("body props - ", this.props);
+    if (!this.state.eventsMap) {
+      return <div></div>;
+    }
     return (
       <section className="section">
         <div className="content">
@@ -35,24 +56,7 @@ class Body extends React.Component {
             <div className="cards-header"><h2>События</h2></div>
             <div className="cards-link-see-all"><a href="">Смотреть все</a></div>
             <div className="cards">
-              <Event
-                  header="День Вышки"
-                  content="4 сентября в &laquo;Парк Горького&laquo;"
-                  type="EVENT"
-                  image="https://images.unsplash.com/photo-1517463859029-c01164a5505a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3300&q=80"
-              ></Event>
-              <Event
-                  header="Просмотр по технологиям дизайна"
-                  content="9 октября в 265 аудитории"
-                  type="DEADLINE"
-                  image="https://images.unsplash.com/photo-1518347257504-c8ff93b3edb7?ixlib=rb-1.2.1&auto=format&fit=crop&w=3368&q=80"
-              ></Event>
-              <Event
-                  header="Просмотр по Английскому языку"
-                  content="9 октября в 265 аудитории"
-                  type="DEADLINE"
-                  image="https://images.unsplash.com/photo-1586791910032-5082330c9b00?ixlib=rb-1.2.1&auto=format&fit=crop&w=969&q=80"
-              ></Event>
+              {events(this.state.eventsMap, this.props.auth.user.course_id)}
             </div>
           </div>
           <div>
@@ -86,6 +90,16 @@ class Body extends React.Component {
       </section>
     );
   }
+}
+
+function events(eventsMap, courseNumber) {
+  let events = eventsMap.get(courseNumber);
+  return events.map(event => <Event
+        header={event.title}
+        content={event.description}
+        type={event.tag.toUpperCase()}
+        image={event.imageUrl}
+    />);
 }
 
 async function fetchNews() {
